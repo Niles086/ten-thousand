@@ -28,10 +28,10 @@ class GameLogic:
         # Calculate score for special combinations
         if counts[1] == 6:  # Six ones
             score = 4000
-        elif all(counts[i] == 1 for i in range(1, 7)):
+        elif all(counts[i] == 1 for i in range(1, 7)) and not counts[1] == 6:
             score = 1500  # Straight
         elif counts.count(2) == 3:  # Three sets of pairs
-            score = 1000  # Pairs
+            score = 1500  # Three pairs
         elif 4 in counts:  # Four-of-a-kind
             score += 200
         elif 5 in counts:  # Five-of-a-kind
