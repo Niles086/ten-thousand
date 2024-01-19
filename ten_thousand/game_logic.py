@@ -2,21 +2,18 @@
 
 import random
 
-
 class GameLogic:
     @staticmethod
     def roll_dice(num_dice):
         return [random.randint(1, 6) for _ in range(num_dice)]
+
     @staticmethod
     def calculate_score(dice_roll):
         score = 0
         counts = [0] * 7  # Initialize counts for each dice face (1 to 6)
 
-
-
         for dice in dice_roll:
             counts[dice] += 1
-            
 
         # Calculate score for each dice face
         score += counts[5] // 3 * 500  # Three fives
@@ -43,3 +40,56 @@ class GameLogic:
             score += 400
 
         return score
+
+    @staticmethod
+    def validate_roll(roll, selected_dice):
+        """
+        Validates the user's roll, checking for cheating or invalid selections.
+
+        Args:
+        - roll (list): The current roll of dice.
+        - selected_dice (list): The indices of dice selected by the user.
+
+        Returns:
+        - bool: True if the roll is valid, False otherwise.
+        """
+        # Check for cheating or invalid selections
+        if len(selected_dice) > len(roll):
+            return False
+
+        for index in selected_dice:
+            if index < 0 or index >= len(roll):
+                return False
+
+        return True
+
+    @staticmethod
+    def continue_turn(roll, selected_dice, total_used_dice):
+        """
+        Continues the turn with the remaining dice after setting aside scoring dice.
+
+        Args:
+        - roll (list): The current roll of dice.
+        - selected_dice (list): The indices of dice selected by the user.
+        - total_used_dice (int): The total number of dice used in the current turn.
+
+        Returns:
+        - tuple: A tuple containing the remaining dice and a flag indicating if all dice have been used.
+        """
+        remaining_dice = [die for i, die in enumerate(roll) if i not in selected_dice]
+
+        # Check if all 6 dice have been used
+        all_dice_used = total_used_dice + len(selected_dice) >= 6
+
+        return remaining_dice, all_dice_used
+
+    @staticmethod
+    def handle_zilch():
+        """
+        Handles the case where no points are scored in a round (zilch).
+
+        Returns:
+        - int: The score for the round (always 0 for zilch).
+        """
+        print("Zilch! No points for this round.")
+        return 0
