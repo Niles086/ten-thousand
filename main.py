@@ -3,7 +3,7 @@ from ten_thousand.utils import get_input
 
 def main():
     player_name = input("Enter your name: ")
-    print("Welcome, {}, to the Ten Thousand dice game!".format(player_name))
+    print("Welcome, {}, to the Ten Thousand".format(player_name))
 
     total_score = 0
     current_round = 1
